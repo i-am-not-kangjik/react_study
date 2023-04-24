@@ -47,7 +47,15 @@ function App() {
     new따봉[index] += 1;
     따봉변경(new따봉);
   };
-  
+
+  const handleRemoveClick = (index) => {
+    let copy글제목 = [...글제목];
+    let copy따봉 = [...따봉];
+    copy글제목.splice(index, 1);
+    copy따봉.splice(index, 1);
+    글제목변경(copy글제목);
+    따봉변경(copy따봉);
+  };
 
   return (
     <div className="App">
@@ -74,6 +82,9 @@ function App() {
                 }}>👍</span>{따봉[i]}
               </h4>
               <p>2월 18일 발행</p>
+              <span onClick={() => handleRemoveClick(i)}>
+               글 삭제
+              </span>
             </div>
           )
         })
