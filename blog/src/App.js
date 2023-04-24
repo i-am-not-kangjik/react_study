@@ -29,24 +29,13 @@ function App() {
 
       <button onClick={handleSortClick}>제목 정렬</button>
 
-      {/* <div className="list">
-        <h4>{ 글제목[0] } <span onClick={ ()=>{ 따봉변경(따봉++) } }>👍</span> { 따봉 } </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{ 글제목[1] }</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4 onClick={()=>{ setModal(!modal) }}>{ 글제목[2] }</h4>
-        <p>2월 17일 발행</p>
-      </div> */}
       {
         글제목.map(function (a, i) {
           return (
             <div className='list'>
               <h4 onClick={()=>{setModal(true); setTitle(i)}}>{a}
-              <span onClick={() => {
+              <span onClick={(e) => {
+                e.stopPropagation();
                 let copy = [...따봉];
                 copy[i]++;
                 따봉변경(copy);
@@ -57,6 +46,9 @@ function App() {
           )
         })
       }
+
+      <input type="text"></input>
+
       {
         modal == true ? <Modal title={title} 글제목={글제목}></Modal> : null
       }
