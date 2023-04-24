@@ -10,27 +10,33 @@ function App() {
   let [modal, setModal] = useState(false);
   let [title, setTitle] = useState(0);
   let [입력값, 입력값변경] = useState('');
+  let [작성일, 작성일변경] = useState(['2월 18일', '2월 19일', '2월 20일']);
 
   const handleSortClick = () => {
     let sortedData = [...글제목].map((title, index) => {
-      return { title, like: 따봉[index] };
+      return { title, like: 따봉[index], date: 작성일[index] };
     });
-
+  
     sortedData.sort((a, b) => {
       return a.title.localeCompare(b.title);
     });
-
+  
     let sortedTitles = sortedData.map((data) => {
       return data.title;
     });
-
+  
     let sortedLikes = sortedData.map((data) => {
       return data.like;
     });
-
+  
+    let sortedDates = sortedData.map((data) => {
+      return data.date;
+    });
+  
     글제목변경(sortedTitles);
     따봉변경(sortedLikes);
-  };
+    작성일변경(sortedDates);
+  };  
 
   const handleAddClick = () => {
     if (!입력값) {
@@ -38,12 +44,17 @@ function App() {
     }
     let copy글제목 = [...글제목];
     let copy따봉 = [...따봉];
+    let currentDate = new Date();
+    let formattedDate = `${currentDate.getMonth() + 1}월 ${currentDate.getDate()}일`;
+    let copy작성일 = [...작성일];
     copy글제목.unshift(입력값);
     copy따봉.unshift(0);
+    copy작성일.unshift(formattedDate);
     글제목변경(copy글제목);
     따봉변경(copy따봉);
+    작성일변경(copy작성일);
     입력값변경('');
-  };
+  };  
 
   const handleLikeClick = (index) => {
     const new따봉 = [...따봉];
@@ -84,7 +95,7 @@ function App() {
                   handleLikeClick(i);
                 }}>👍</span>{따봉[i]}
               </h4>
-              <p>2월 18일 발행</p>
+              <p>{작성일[i]} 발행</p>
               <span onClick={() => handleRemoveClick(i)}>
                글 삭제
               </span>
@@ -94,7 +105,7 @@ function App() {
       }
       <div className='add-post'>
         <div>
-          <input onChange={(e) => {
+          <input value={입력값} onChange={(e) => {
             입력값변경(e.target.value);
           }}></input>
           <button onClick={handleAddClick}>글 발행</button>
