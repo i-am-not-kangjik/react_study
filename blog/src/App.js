@@ -12,14 +12,33 @@ function App() {
   let [입력값, 입력값변경] = useState('');
 
   const handleSortClick = () => {
-    const sortedTitles = 글제목.slice().sort();
+    let sortedData = [...글제목].map((title, index) => {
+      return { title, like: 따봉[index] };
+    });
+
+    sortedData.sort((a, b) => {
+      return a.title.localeCompare(b.title);
+    });
+
+    let sortedTitles = sortedData.map((data) => {
+      return data.title;
+    });
+
+    let sortedLikes = sortedData.map((data) => {
+      return data.like;
+    });
+
     글제목변경(sortedTitles);
+    따봉변경(sortedLikes);
   };
 
   const handleAddClick = () => {
-    let copy = [...글제목];
-    copy.unshift(입력값);
-    글제목변경(copy);
+    let copy글제목 = [...글제목];
+    let copy따봉 = [...따봉];
+    copy글제목.unshift(입력값);
+    copy따봉.unshift(0);
+    글제목변경(copy글제목);
+    따봉변경(copy따봉);
     입력값변경('');
   };
 
@@ -69,7 +88,7 @@ function App() {
       </div>
 
       {
-        modal == true ? <Modal title={title} 글제목={글제목}></Modal> : null
+        modal === true ? <Modal title={title} 글제목={글제목} 따봉={따봉}/> : null
       }
 
     </div>
@@ -82,6 +101,7 @@ function Modal(props) {
       <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <p>{props.따봉[props.title]}</p>
       <button>글수정</button>
     </div>
   )
