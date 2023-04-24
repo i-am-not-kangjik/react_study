@@ -7,7 +7,8 @@ function App() {
   let blogTitle = 'ReactBlog';
   let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동 맛집', '파이썬 독학'])
   let [따봉, 따봉변경] = useState([0, 0, 0]);
-  let [modal, setModal] = useState(true);
+  let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState(0);
 
   const handleSortClick = () => {
     const sortedTitles = [...글제목].sort();
@@ -44,7 +45,7 @@ function App() {
         글제목.map(function (a, i) {
           return (
             <div className='list'>
-              <h4>{a}
+              <h4 onClick={()=>{setModal(true); setTitle(i)}}>{a}
               <span onClick={() => {
                 let copy = [...따봉];
                 copy[i]++;
@@ -56,9 +57,8 @@ function App() {
           )
         })
       }
-
       {
-        modal == true ? <Modal 글제목={글제목[0]} color={'yellow'}></Modal> : null
+        modal == true ? <Modal title={title} 글제목={글제목}></Modal> : null
       }
 
     </div>
@@ -67,10 +67,11 @@ function App() {
 
 function Modal(props) {
   return (
-    <div className='modal' style={{background : props.color}}>
-      <h4>{props.글제목}</h4>
+    <div className='modal'>
+      <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button>글수정</button>
     </div>
   )
 }
