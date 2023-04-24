@@ -33,6 +33,9 @@ function App() {
   };
 
   const handleAddClick = () => {
+    if (!입력값) {
+      return;
+    }
     let copy글제목 = [...글제목];
     let copy따봉 = [...따봉];
     copy글제목.unshift(입력값);
@@ -94,7 +97,7 @@ function App() {
           <input onChange={(e) => {
             입력값변경(e.target.value);
           }}></input>
-          <button onClick={handleAddClick}>추가</button>
+          <button onClick={handleAddClick}>글 발행</button>
         </div>
       </div>
 
