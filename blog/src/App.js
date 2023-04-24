@@ -12,7 +12,7 @@ function App() {
   let [입력값, 입력값변경] = useState('');
 
   const handleSortClick = () => {
-    const sortedTitles = [...글제목].sort();
+    const sortedTitles = 글제목.slice().sort();
     글제목변경(sortedTitles);
   };
 
@@ -22,6 +22,13 @@ function App() {
     글제목변경(copy);
     입력값변경('');
   };
+
+  const handleLikeClick = (index) => {
+    const new따봉 = [...따봉];
+    new따봉[index] += 1;
+    따봉변경(new따봉);
+  };
+  
 
   return (
     <div className="App">
@@ -44,9 +51,7 @@ function App() {
               <h4 onClick={() => { setModal(true); setTitle(i) }}>{a}
                 <span onClick={(e) => {
                   e.stopPropagation();
-                  let copy = [...따봉];
-                  copy[i]++;
-                  따봉변경(copy);
+                  handleLikeClick(i);
                 }}>👍</span>{따봉[i]}
               </h4>
               <p>2월 18일 발행</p>
@@ -62,7 +67,7 @@ function App() {
           <button onClick={handleAddClick}>추가</button>
         </div>
       </div>
-      
+
       {
         modal == true ? <Modal title={title} 글제목={글제목}></Modal> : null
       }
