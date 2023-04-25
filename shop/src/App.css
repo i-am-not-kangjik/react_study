@@ -1,3 +1,17 @@
+.main-bg {
+  background-image: url('./img/mac.jpg');
+  background-size: cover;
+  background-position: left;
+  width: 100%;
+  height: 40vh;
+}
+
+.main-bg img {
+  max-width: 100%; /* 최대 너비를 부모 요소인 div의 너비와 동일하게 설정 */
+  height: auto; /* 높이는 자동으로 조절되도록 설정 */
+}
+
+
 .App {
   text-align: center;
 }
