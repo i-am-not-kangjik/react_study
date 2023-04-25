@@ -5,6 +5,8 @@ import { Button, Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js'
+import About from './pages/About';
+import EventPage from './pages/EventPage';
 
 function App() {
 
@@ -15,6 +17,10 @@ function App() {
     .fill()
     .map((_, index) => index * chunkSize)
     .map(begin => info.slice(begin, begin + chunkSize));
+
+  const handleItemClick = (id) => {
+    navigate(`/detail/${id}`);
+  }
 
   return (
     <div className="App">
@@ -42,7 +48,7 @@ function App() {
                   <Row key={rowIndex}>
                     {chunk.map((item, colIndex) => (
                       <Col key={colIndex} md={4}>
-                        <img src={process.env.PUBLIC_URL + '/mac' + (item.id + 1) + '.jpg'} className='img-fluid' />
+                        <img src={process.env.PUBLIC_URL + '/mac' + (item.id + 1) + '.jpg'} className='img-fluid' onClick={() => handleItemClick(item.id)} />
                         <h4>{item.title}</h4>
                         <p>{item.price}</p>
                       </Col>
@@ -73,24 +79,6 @@ function App() {
 
     </div>
   );
-}
-
-function About() {
-  return (
-    <div>
-      <h4>회사 정보임</h4>
-      <Outlet></Outlet>
-    </div>
-  )
-}
-
-function EventPage() {
-  return (
-    <div>
-      <h4>오늘의 이벤트</h4>
-      <Outlet></Outlet>
-    </div>
-  )
 }
 
 export default App;
