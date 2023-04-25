@@ -6,7 +6,12 @@ import data from './data.js';
 
 function App() {
 
-  let [info] = useState(data);
+  const [info] = useState(data);
+  const chunkSize = 3;
+  const chunks = Array(Math.ceil(info.length / chunkSize))
+    .fill()
+    .map((_, index) => index * chunkSize)
+    .map(begin => info.slice(begin, begin + chunkSize));
 
   return (
     <div className="App">
@@ -21,24 +26,20 @@ function App() {
       </Navbar>
 
       <div className='main-bg'></div>
-      <Container>
-        <Row>
-          <Col md={4}>
-            <img src={process.env.PUBLIC_URL + '/mac1.jpg'} className='img-fluid' />
-            <h4>{info[0].title}</h4>
-            <p>{info[0].price}</p>
-          </Col>
-          <Col md={4}>
-            <img src={process.env.PUBLIC_URL + '/mac2.jpg'} className='img-fluid' />
-            <h4>{info[1].title}</h4>
-            <p>{info[1].price}</p>
-          </Col>
-          <Col md={4}>
-            <img src={process.env.PUBLIC_URL + '/mac3.jpg'} className='img-fluid' />
-            <h4>{info[2].title}</h4>
-            <p>{info[2].price}</p>
-          </Col>
-        </Row>
+      <Container className='mt-4'>
+        {
+          chunks.map((chunk, rowIndex) => (
+            <Row key={rowIndex}>
+              {chunk.map((item, colIndex) => (
+                <Col key={colIndex} md={4}>
+                  <img src={process.env.PUBLIC_URL + '/mac' + (item.id+1) + '.jpg'} className='img-fluid' />
+                  <h4>{item.title}</h4>
+                  <p>{item.price}</p>
+                </Col>
+              ))}
+            </Row>
+          ))
+        }
       </Container>
     </div>
   );
