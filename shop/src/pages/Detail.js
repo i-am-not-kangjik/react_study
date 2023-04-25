@@ -1,4 +1,11 @@
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+let YellowBtn = styled.button`
+    background : ${props => props.bg};
+    color : ${props => props.bg == 'blue' ? 'white' : 'black'};
+    padiing : 10px;
+`
 
 function Detail(props) {
 
@@ -7,6 +14,8 @@ function Detail(props) {
 
     return (
         <div className="container mt-5">
+            <YellowBtn bg='blue'>버튼</YellowBtn>
+            <YellowBtn bg='orange'>버튼</YellowBtn>
             <div className="row">
                 <div className="col-md-6 mt-5">
                     <img src={process.env.PUBLIC_URL + '/mac' + (parseInt(id) + 1) + '.jpg'} className='img-fluid rounded' style={{ maxHeight: '500px' }} />
