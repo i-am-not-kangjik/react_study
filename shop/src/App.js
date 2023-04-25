@@ -3,10 +3,12 @@ import { useState } from 'react';
 import './App.css';
 import { Button, Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import data from './data.js';
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import Detail from './pages/Detail.js'
 
 function App() {
 
+  let navigate = useNavigate();
   const [info] = useState(data);
   const chunkSize = 3;
   const chunks = Array(Math.ceil(info.length / chunkSize))
@@ -22,8 +24,8 @@ function App() {
         <Container>
           <Navbar.Brand href="/">다판다</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/detail">Cart</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -50,11 +52,25 @@ function App() {
           </>
         }
         />
-        <Route path='/detail' element={<div>상세페이지임</div>} />
+        <Route path='/detail' element={<Detail />} />
+        <Route path='/about' element={<About />}>
+          <Route path='member' element={<div>멤버임</div>} />
+          <Route path='location' element={<div>위치임</div>} />
+        </Route>
+        <Route path='*' element={<div>없는 페이지</div>} />
       </Routes>
 
     </div>
   );
+}
+
+function About() {
+  return (
+    <div>
+      <h4>회사 정보임</h4>
+      <Outlet></Outlet>
+    </div>
+  )
 }
 
 export default App;
