@@ -1,9 +1,13 @@
 import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 import { Button, Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
-
+import data from './data.js';
 
 function App() {
+
+  let [info] = useState(data);
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -21,18 +25,18 @@ function App() {
         <Row>
           <Col md={4}>
             <img src={process.env.PUBLIC_URL + '/mac1.jpg'} className='img-fluid' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
+            <h4>{info[0].title}</h4>
+            <p>{info[0].price}</p>
           </Col>
           <Col md={4}>
             <img src={process.env.PUBLIC_URL + '/mac2.jpg'} className='img-fluid' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
+            <h4>{info[1].title}</h4>
+            <p>{info[1].price}</p>
           </Col>
           <Col md={4}>
             <img src={process.env.PUBLIC_URL + '/mac3.jpg'} className='img-fluid' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
+            <h4>{info[2].title}</h4>
+            <p>{info[2].price}</p>
           </Col>
         </Row>
       </Container>
