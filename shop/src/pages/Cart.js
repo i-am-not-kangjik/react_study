@@ -1,6 +1,11 @@
 import { Table } from "react-bootstrap"
+import { useSelector } from "react-redux";
 
 function Cart() {
+
+    let stock = useSelector((state) => { return state.stock });
+    console.log(stock)
+
     return (
         <div>
             <Table striped bordered hover>
