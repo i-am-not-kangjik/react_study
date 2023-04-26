@@ -2,6 +2,7 @@
   "name": "shop",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://i-am-not-kangjik.github.io/shop_react",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
