@@ -56,7 +56,7 @@ function App() {
             <div className='main-bg'></div>
             <Container className='mt-4'>
               {chunks.map((chunk, rowIndex) => (
-                <Row key={rowIndex}>
+                <Row key={rowIndex} className={rowIndex > 0 ? 'mt-4' : ''}>
                   {chunk.map((item, colIndex) => (
                     <ItemCard key={colIndex} item={item} onItemClick={handleItemClick} />
                   ))}
