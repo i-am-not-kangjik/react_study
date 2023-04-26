@@ -30,7 +30,7 @@ function App() {
     const dataUrl = ['https://codingapple1.github.io/shop/data2.json', 'https://codingapple1.github.io/shop/data3.json'];
 
     setIsLoading(true); // 로딩중입니다 표시
-    
+
     // 불러올 데이터가 없을 경우
     if (loadCount >= dataUrl.length) {
       setIsButtonVisible(false);
@@ -87,6 +87,17 @@ function App() {
                 </Row>
               ))}
             </Container>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+                <Spinner animation="border" variant="secondary" />
+              </div>
+            ) : (
+              isButtonVisible && (
+                <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>
+                  더보기
+                </Button>
+              )
+            )}
           </>
         }
         />
@@ -107,21 +118,6 @@ function App() {
         <Route path='*' element={<div>없는 페이지</div>} />
 
       </Routes>
-      {isLoading ? (
-        <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
-          <Spinner animation="border" variant="secondary" />
-        </div>
-      ) : (
-        isButtonVisible && (
-          <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>
-            더보기
-          </Button>
-        )
-      )}
-
-
-
-
     </div>
   );
 }
