@@ -40,7 +40,7 @@ function Detail(props) {
                 </div>
             </div>
 
-            <Nav variant="tabs" defaultActiveKey="link0">
+            <Nav className="mt-4" variant="tabs" defaultActiveKey="link0">
                 <Nav.Item>
                     <Nav.Link onClick={() => { setTabNum(0) }} eventKey="link0" className={tabNum === 0 ? "nav-link bg-success text-white active" : "nav-link"}>버튼0</Nav.Link>
                 </Nav.Item>
