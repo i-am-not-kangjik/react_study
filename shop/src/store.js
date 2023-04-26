@@ -1,17 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-
-
-let user = createSlice({
-    name: 'user',
-    initialState: 'kim',
-    reducers: {
-        changeName(originState) {
-            return 'john ' + originState;
-        }
-    }
-})
-
-export let { changeName } = user.actions
+import user from "./store/userSlice";
 
 let stock = createSlice({
     name: 'stock',
