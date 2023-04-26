@@ -91,11 +91,15 @@ function App() {
                 <Spinner animation="border" variant="secondary" />
               </div>
             ) : (
-              isButtonVisible && (
-                <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>
-                  더보기
-                </Button>
-              )
+              <>
+                {isButtonVisible ? (
+                  <Button className="mt-4" variant="secondary" onClick={handleLoadMore}>
+                    더보기
+                  </Button>
+                ) : (
+                  <div className="mt-4" style={{ height: 0 }}></div>
+                )}
+              </>
             )}
           </>
         }
