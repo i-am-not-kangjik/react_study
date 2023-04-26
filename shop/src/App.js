@@ -27,9 +27,9 @@ function App() {
 
 
       <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="/">다판다</Navbar.Brand>
-          <Nav className="me-auto">
+        <Container fluid>
+          <Navbar.Brand className='ms-4' href="/">다판다</Navbar.Brand>
+          <Nav className="ms-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
