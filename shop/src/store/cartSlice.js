@@ -26,7 +26,7 @@ const cart = createSlice({
             } else {
                 state.push(newItem);
             }
-        },          
+        },
         removeCartItem(state, action) {
             const id = action.payload;
             const index = state.findIndex(item => item.id === id);
@@ -41,4 +41,7 @@ const cart = createSlice({
 
 
 export let { addCount, minusCount, addCartItem, removeCartItem } = cart.actions;
+export const selectTotalCartCount = (state) => {
+    return state.cart.reduce((total, item) => total + item.count, 0);
+};
 export default cart;

@@ -9,9 +9,11 @@ import EventPage from './pages/EventPage';
 import axios from 'axios';
 import ItemCard from './components/ItemCard';
 import Cart from './pages/Cart';
+import { useSelector } from 'react-redux';
+import { selectTotalCartCount } from './store/cartSlice';
 
 function App() {
-
+  const totalCartCount = useSelector(selectTotalCartCount);
   let navigate = useNavigate();
   const [info, setInfo] = useState(data);
   const chunkSize = 3;
@@ -70,7 +72,7 @@ function App() {
             {/* <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> */}
             <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/cart') }}>Cart ({totalCartCount})</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
