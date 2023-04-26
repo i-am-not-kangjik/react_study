@@ -1,6 +1,14 @@
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
 
 .main-bg {
-  background-image: url('./img/mac.jpg');
+  background-image: url("./img/mac.jpg");
   background-size: cover;
   background-position: left;
   max-width: 100%;
@@ -11,7 +19,6 @@
   max-width: 100%; /* 최대 너비를 부모 요소인 div의 너비와 동일하게 설정 */
   height: auto; /* 높이는 자동으로 조절되도록 설정 */
 }
-
 
 .App {
   text-align: center;

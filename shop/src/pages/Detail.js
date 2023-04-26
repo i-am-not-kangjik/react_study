@@ -63,7 +63,21 @@ function Detail(props) {
 }
 
 function TabContent({ tabNum }) {
-    return ([<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabNum]);
+    let [fade, setFade] = useState('');
+
+    useEffect(() => {
+       let fadeTimer = setTimeout(() => { setFade('end'); }, 10)
+        return () => {
+            clearTimeout(fadeTimer);
+            setFade('');
+        }
+    }, [tabNum])
+
+    return (
+        <div className={`start ${fade}`}>
+            {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabNum]}
+        </div>
+    );
 }
 
 export default Detail;

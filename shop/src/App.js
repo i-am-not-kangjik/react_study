@@ -66,8 +66,7 @@ function App() {
         <Container fluid>
           <Navbar.Brand className='ms-4' href="/">다판다</Navbar.Brand>
           <Nav className="ms-auto">
-            <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
+            {/* <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> */}
             <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
           </Nav>
