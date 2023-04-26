@@ -8,6 +8,7 @@ import About from './pages/About';
 import EventPage from './pages/EventPage';
 import axios from 'axios';
 import ItemCard from './components/ItemCard';
+import Cart from './pages/Cart';
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
             {/* <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> */}
             <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -106,6 +108,7 @@ function App() {
         />
 
         <Route path='/detail/:id' element={<Detail info={info} />} />
+        <Route path='/cart' element={<Cart />} />
 
         <Route path='/about' element={<About />}>
           <Route path='member' element={<div>멤버임</div>} />
