@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
-import { Button, Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
+import { Button, Nav, Navbar, Container, Row, Col, Card } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js'
 import About from './pages/About';
 import EventPage from './pages/EventPage';
 import axios from 'axios';
+import ItemCard from './components/ItemCard';
 
 function App() {
 
@@ -25,12 +26,12 @@ function App() {
 
   const handleLoadMore = () => {
     axios.get('https://codingapple1.github.io/shop/data2.json')
-    .then((res) => {
-      setInfo(info.concat(res.data));
-    })
-    .catch(() => {
-      console.log('실패');
-    })
+      .then((res) => {
+        setInfo(info.concat(res.data));
+      })
+      .catch(() => {
+        console.log('실패');
+      })
   };
 
   return (
@@ -54,19 +55,13 @@ function App() {
           <>
             <div className='main-bg'></div>
             <Container className='mt-4'>
-              {
-                chunks.map((chunk, rowIndex) => (
-                  <Row key={rowIndex}>
-                    {chunk.map((item, colIndex) => (
-                      <Col key={colIndex} md={4}>
-                        <img src={process.env.PUBLIC_URL + '/mac' + (item.id + 1) + '.jpg'} className='img-fluid' onClick={() => handleItemClick(item.id)} />
-                        <h4>{item.title}</h4>
-                        <p>{item.price}</p>
-                      </Col>
-                    ))}
-                  </Row>
-                ))
-              }
+              {chunks.map((chunk, rowIndex) => (
+                <Row key={rowIndex}>
+                  {chunk.map((item, colIndex) => (
+                    <ItemCard key={colIndex} item={item} onItemClick={handleItemClick} />
+                  ))}
+                </Row>
+              ))}
             </Container>
           </>
         }
