@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { Button, Nav, Navbar, Container, Row } from 'react-bootstrap';
+import { Button, Nav, Navbar, Container, Row, Spinner } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Detail from './pages/Detail.js'
@@ -21,7 +21,7 @@ function App() {
 
   const [loadCount, setLoadCount] = useState(0); // loadCount 변수와 setLoadCount 함수 정의
   const [isButtonVisible, setIsButtonVisible] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false); // isLoading 변수와 setIsLoading 함수 정의
   const handleItemClick = (id) => {
     navigate(`/detail/${id}`);
   };
@@ -29,9 +29,12 @@ function App() {
   const handleLoadMore = () => {
     const dataUrl = ['https://codingapple1.github.io/shop/data2.json', 'https://codingapple1.github.io/shop/data3.json'];
 
+    setIsLoading(true); // 로딩중입니다 표시
+    
     // 불러올 데이터가 없을 경우
     if (loadCount >= dataUrl.length) {
       setIsButtonVisible(false);
+      setIsLoading(false); // 로딩중입니다 숨기기
       return;
     }
 
@@ -44,9 +47,12 @@ function App() {
         if (loadCount >= dataUrl.length - 1) {
           setIsButtonVisible(false);
         }
+
+        setIsLoading(false); // 로딩중입니다 숨기기
       })
       .catch(() => {
         console.log('실패');
+        setIsLoading(false); // 로딩중입니다 숨기기
       });
   };
 
@@ -101,7 +107,21 @@ function App() {
         <Route path='*' element={<div>없는 페이지</div>} />
 
       </Routes>
-      {isButtonVisible && <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>더보기</Button>}
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      ) : (
+        isButtonVisible && (
+          <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>
+            더보기
+          </Button>
+        )
+      )}
+
+
+
+
     </div>
   );
 }
