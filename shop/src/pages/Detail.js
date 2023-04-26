@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { Nav } from "react-bootstrap";
+import { tab } from "@testing-library/user-event/dist/tab";
 
 function Detail(props) {
 
@@ -12,9 +13,11 @@ function Detail(props) {
             // useEffect 동작 전에 실행됨
         }
     });
+
     let { id } = useParams();
     let found_id = props.info.find((x) => x.id == id);
     let [alert, setAlert] = useState(true);
+    let [tabNum, setTabNum] = useState(0);
 
     return (
         <div className="container mt-5">
@@ -37,8 +40,30 @@ function Detail(props) {
                 </div>
             </div>
 
+            <Nav variant="tabs" defaultActiveKey="link0">
+                <Nav.Item>
+                    <Nav.Link onClick={() => { setTabNum(0) }} eventKey="link0" className={tabNum === 0 ? "nav-link bg-success text-white active" : "nav-link"}>버튼0</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => { setTabNum(1) }} eventKey="link1" className={tabNum === 1 ? "nav-link bg-success text-white active" : "nav-link"}>버튼1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => { setTabNum(2) }} eventKey="link2" className={tabNum === 2 ? "nav-link bg-success text-white active" : "nav-link"}>버튼2</Nav.Link>
+                </Nav.Item>
+            </Nav>
+
+
+            <TabContent tabNum={tabNum} />
+
+
+
+
         </div>
     )
+}
+
+function TabContent({ tabNum }) {
+    return ([<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabNum]);
 }
 
 export default Detail;
