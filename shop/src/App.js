@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
-import { Button, Nav, Navbar, Container, Row, Col, Card } from 'react-bootstrap';
+import { Button, Nav, Navbar, Container, Row } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js'
@@ -20,19 +19,38 @@ function App() {
     .map((_, index) => index * chunkSize)
     .map(begin => info.slice(begin, begin + chunkSize));
 
+  const [loadCount, setLoadCount] = useState(0); // loadCount 변수와 setLoadCount 함수 정의
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
+
   const handleItemClick = (id) => {
     navigate(`/detail/${id}`);
   };
 
   const handleLoadMore = () => {
-    axios.get('https://codingapple1.github.io/shop/data2.json')
+    const dataUrl = ['https://codingapple1.github.io/shop/data2.json', 'https://codingapple1.github.io/shop/data3.json'];
+  
+    // 불러올 데이터가 없을 경우
+    if (loadCount >= dataUrl.length) {
+      setIsButtonVisible(false);
+      return;
+    }
+  
+    axios.get(dataUrl[loadCount])
       .then((res) => {
         setInfo(info.concat(res.data));
+        setLoadCount(loadCount + 1);
+  
+        // 더보기 버튼을 최대 두번 누를 수 있도록 제한
+        if (loadCount >= dataUrl.length - 1) {
+          setIsButtonVisible(false);
+        }
       })
       .catch(() => {
         console.log('실패');
-      })
+      });
   };
+
+
 
   return (
     <div className="App">
@@ -83,7 +101,7 @@ function App() {
         <Route path='*' element={<div>없는 페이지</div>} />
 
       </Routes>
-      <button onClick={handleLoadMore}>더보기</button>
+       {isButtonVisible && <Button className='mt-4' variant='secondary' onClick={handleLoadMore}>더보기</Button>}
     </div>
   );
 }
