@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 
 function Cart() {
 
-    let stock = useSelector((state) => { return state.stock });
-    console.log(stock)
+    let state = useSelector((state) => { return state.cart });
 
     return (
         <div>
@@ -12,18 +11,24 @@ function Cart() {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>상품 명</th>
+                        <th>상품명</th>
                         <th>수량</th>
                         <th>변경하기</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>안녕</td>
-                        <td>안안녕</td>
-                        <td>안안안녕</td>
-                    </tr>
+                    {
+                        state.map((a, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{state[i].name}</td>
+                                    <td>{state[i].count}</td>
+                                    <td>안안안녕</td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </Table>
         </div>
