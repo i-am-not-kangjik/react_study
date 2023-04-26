@@ -1,6 +1,6 @@
 import { Table, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { addCount, minusCount } from "../store/cartSlice";
+import { addCount, minusCount, removeCartItem } from "../store/cartSlice";
 
 function Cart() {
 
@@ -28,14 +28,17 @@ function Cart() {
                                     <td>{state.cart[i].name}</td>
                                     <td>{state.cart[i].count}</td>
                                     <td>
-                                        <Button className="mx-1" variant="danger" onClick={() => {
+                                        <Button size="sm" className="mx-1" variant="danger" onClick={() => {
                                             dispatch(addCount(a))
                                         }}>+
                                         </Button>
-                                        <Button variant="warning" onClick={() => {
+                                        <Button size="sm" variant="warning" onClick={() => {
                                             dispatch(minusCount(a))
-                                        }}>-
-                                        </Button>
+                                        }}>-</Button>
+
+                                        <button className="btn btn-secondary btn-sm mx-1" onClick={() => {
+                                            dispatch(removeCartItem(a.id));
+                                        }}>삭제하기</button>
 
                                     </td>
                                 </tr>

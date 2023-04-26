@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import { addCartItem } from "../store/cartSlice";
+import { useDispatch } from 'react-redux';
 
 function Detail(props) {
 
@@ -27,6 +29,7 @@ function Detail(props) {
     let found_id = props.info.find((x) => x.id == id);
     let [alert, setAlert] = useState(true);
     let [tabNum, setTabNum] = useState(0);
+    let dispatch = useDispatch();
 
     return (
         <div className={`container mt-5 start ${fade2}`}>
@@ -45,7 +48,13 @@ function Detail(props) {
                     <h2 className="pt-5">{found_id.title}</h2>
                     <p style={{ fontSize: '1.5rem' }}>{found_id.content}</p>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{found_id.price + '원'}</p>
-                    <button className="btn btn-danger btn-lg">주문하기</button>
+                    <button onClick={()=>{
+                        dispatch(addCartItem({
+                            id: found_id.id,
+                            name: found_id.title,
+                            count: 1
+                        }));
+                    }} className="btn btn-danger btn-lg">주문하기</button>
                 </div>
             </div>
 
