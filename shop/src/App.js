@@ -7,11 +7,12 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js'
 import About from './pages/About';
 import EventPage from './pages/EventPage';
+import axios from 'axios';
 
 function App() {
 
   let navigate = useNavigate();
-  const [info] = useState(data);
+  const [info, setInfo] = useState(data);
   const chunkSize = 3;
   const chunks = Array(Math.ceil(info.length / chunkSize))
     .fill()
@@ -20,7 +21,17 @@ function App() {
 
   const handleItemClick = (id) => {
     navigate(`/detail/${id}`);
-  }
+  };
+
+  const handleLoadMore = () => {
+    axios.get('https://codingapple1.github.io/shop/data2.json')
+    .then((res) => {
+      setInfo(info.concat(res.data));
+    })
+    .catch(() => {
+      console.log('실패');
+    })
+  };
 
   return (
     <div className="App">
@@ -60,6 +71,7 @@ function App() {
           </>
         }
         />
+
         <Route path='/detail/:id' element={<Detail info={info} />} />
 
         <Route path='/about' element={<About />}>
@@ -76,7 +88,7 @@ function App() {
         <Route path='*' element={<div>없는 페이지</div>} />
 
       </Routes>
-
+      <button onClick={handleLoadMore}>더보기</button>
     </div>
   );
 }
