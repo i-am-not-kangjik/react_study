@@ -27,7 +27,7 @@ function Detail(props) {
             }
             <div className="row">
                 <div className="col-md-6 mt-5">
-                    <img src={process.env.PUBLIC_URL + '/mac' + (parseInt(id) + 1) + '.jpg'} className='img-fluid rounded' style={{ maxHeight: '500px' }} />
+                    <img src={process.env.PUBLIC_URL + '/laptop' + id + '.jpg'} className='img-fluid rounded' style={{ maxHeight: '500px' }} />
                 </div>
                 <div className="col-md-6 mt-2">
                     <h2 className="pt-5">{found_id.title}</h2>
