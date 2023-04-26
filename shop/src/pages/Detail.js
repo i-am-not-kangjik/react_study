@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import { tab } from "@testing-library/user-event/dist/tab";
 
 function Detail(props) {
+
+    let [fade2, setFade2] = useState('');
+
+    useEffect(() => {
+        let fadeTimer2 = setTimeout(() => { setFade2('end'); }, 10)
+        return () => {
+            clearTimeout(fadeTimer2);
+            setFade2('');
+        }
+    }, [])
 
     useEffect(() => {
         let a = setTimeout(() => { setAlert(false) }, 1000, [])
@@ -20,7 +29,7 @@ function Detail(props) {
     let [tabNum, setTabNum] = useState(0);
 
     return (
-        <div className="container mt-5">
+        <div className={`container mt-5 start ${fade2}`}>
             {
                 alert == true ?
                     <div className="alert alert-warning">
@@ -66,7 +75,7 @@ function TabContent({ tabNum }) {
     let [fade, setFade] = useState('');
 
     useEffect(() => {
-       let fadeTimer = setTimeout(() => { setFade('end'); }, 10)
+        let fadeTimer = setTimeout(() => { setFade('end'); }, 10)
         return () => {
             clearTimeout(fadeTimer);
             setFade('');
