@@ -7,9 +7,9 @@ function Detail(props) {
     useEffect(() => {
         let a = setTimeout(() => { setAlert(false) }, 1000, [])
 
-        return ()=>{
+        return () => {
             clearTimeout(a);    // 기존 데이터 요청을 제거 (clean-up function)
-                                // useEffect 동작 전에 실행됨
+            // useEffect 동작 전에 실행됨
         }
     });
     let { id } = useParams();
@@ -25,7 +25,7 @@ function Detail(props) {
                     </div>
                     : null
             }
-            <div className="row">
+            <div className="row" style={{ display: 'flex', alignItems: 'center' }}>
                 <div className="col-md-6 mt-5">
                     <img src={process.env.PUBLIC_URL + '/laptop' + id + '.jpg'} className='img-fluid rounded' style={{ maxHeight: '500px' }} />
                 </div>
@@ -36,6 +36,7 @@ function Detail(props) {
                     <button className="btn btn-danger btn-lg">주문하기</button>
                 </div>
             </div>
+
         </div>
     )
 }
