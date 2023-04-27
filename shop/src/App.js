@@ -15,6 +15,10 @@ import Watched from './pages/Watched';
 
 function App() {
 
+  useEffect(()=> {
+    document.title = "다판다";
+  })
+
   const totalCartCount = useSelector(selectTotalCartCount);
   let navigate = useNavigate();
   const [info, setInfo] = useState(data);
