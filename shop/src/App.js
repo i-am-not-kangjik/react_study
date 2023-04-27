@@ -12,8 +12,15 @@ import Cart from './pages/Cart';
 import { useSelector } from 'react-redux';
 import { selectTotalCartCount } from './store/cartSlice';
 import Watched from './pages/Watched';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
+
+  let queryResult = useQuery(['작명'], ()=> {
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a)=> {
+      return a.data;
+    })
+  })
 
   useEffect(()=> {
     document.title = "다판다";
@@ -92,6 +99,9 @@ function App() {
       <Navbar bg="dark" variant="dark">
         <Container fluid>
           <Navbar.Brand className='ms-4' onClick={() => navigate('/')}>다판다</Navbar.Brand>
+          <Navbar.Text className='me-auto'>
+            {queryResult.isLoading ? '로딩중입니다' : queryResult.data.name + "님 안녕하세요"}
+          </Navbar.Text>
           <Nav className="ms-auto justify-content-between">
             <Nav.Link onClick={() => { navigate('/watched') }}>
               <div style={{ position: 'relative' }}>
@@ -121,6 +131,7 @@ function App() {
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart ({totalCartCount})</Nav.Link>
           </Nav>
+          
         </Container>
       </Navbar>
 
