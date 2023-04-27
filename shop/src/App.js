@@ -21,8 +21,8 @@ function App() {
 
   const totalCartCount = useSelector(selectTotalCartCount);
   let navigate = useNavigate();
-  const [info, setInfo] = useState(data);
   const chunkSize = 3;
+  const [info, setInfo] = useState(data.slice(0, chunkSize));
   const chunks = Array(Math.ceil(info.length / chunkSize))
     .fill()
     .map((_, index) => index * chunkSize)
