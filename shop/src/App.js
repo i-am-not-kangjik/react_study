@@ -1,28 +1,34 @@
-import { useState, useEffect } from 'react';
+import { lazy, useState, useEffect, Suspense } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import './App.css';
 import { Button, Nav, Navbar, Container, Row, Spinner } from 'react-bootstrap';
-import data from './data.js';
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import Detail from './pages/Detail.js'
-import About from './pages/About';
-import EventPage from './pages/EventPage';
 import axios from 'axios';
-import ItemCard from './components/ItemCard';
-import Cart from './pages/Cart';
+
+import data from './data.js';
+// import Detail from './routes/Detail.js'
+import About from './routes/About';
+import EventPage from './routes/EventPage';
+import ItemCard from './routes/ItemCard';
+// import Cart from './routes/Cart.js';
+import Watched from './routes/Watched';
+
 import { useSelector } from 'react-redux';
 import { selectTotalCartCount } from './store/cartSlice';
-import Watched from './pages/Watched';
 import { useQuery } from '@tanstack/react-query';
+
+// lazy 사용법
+const Detail = lazy(() => import('./routes/Detail.js'))
+const Cart = lazy(() => import('./routes/Cart'))
 
 function App() {
 
-  let queryResult = useQuery(['작명'], ()=> {
-    return axios.get('https://codingapple1.github.io/userdata.json').then((a)=> {
+  let queryResult = useQuery(['작명'], () => {
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
       return a.data;
     })
   })
 
-  useEffect(()=> {
+  useEffect(() => {
     document.title = "다판다";
   })
 
@@ -131,60 +137,61 @@ function App() {
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart ({totalCartCount})</Nav.Link>
           </Nav>
-          
+
         </Container>
       </Navbar>
 
+      <Suspense fallback={<Spinner animation="border" variant="primary" />}>
+        <Routes>
+          <Route path='/' element={
+            <>
+              <div className='main-bg'></div>
+              <Container className='mt-4'>
+                {chunks.map((chunk, rowIndex) => (
+                  <Row key={rowIndex} className={rowIndex > 0 ? 'mt-4' : ''}>
+                    {chunk.map((item, colIndex) => (
+                      <ItemCard key={colIndex} item={item} onItemClick={handleItemClick} />
+                    ))}
+                  </Row>
+                ))}
+              </Container>
+              {isLoading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+                  <Spinner animation="border" variant="secondary" />
+                </div>
+              ) : (
+                <>
+                  {isButtonVisible ? (
+                    <Button className="mt-4" variant="secondary" onClick={handleLoadMore}>
+                      더보기
+                    </Button>
+                  ) : (
+                    <div className="mt-4" style={{ height: 0 }}></div>
+                  )}
+                </>
+              )}
+            </>
+          }
+          />
 
-      <Routes>
-        <Route path='/' element={
-          <>
-            <div className='main-bg'></div>
-            <Container className='mt-4'>
-              {chunks.map((chunk, rowIndex) => (
-                <Row key={rowIndex} className={rowIndex > 0 ? 'mt-4' : ''}>
-                  {chunk.map((item, colIndex) => (
-                    <ItemCard key={colIndex} item={item} onItemClick={handleItemClick} />
-                  ))}
-                </Row>
-              ))}
-            </Container>
-            {isLoading ? (
-              <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
-                <Spinner animation="border" variant="secondary" />
-              </div>
-            ) : (
-              <>
-                {isButtonVisible ? (
-                  <Button className="mt-4" variant="secondary" onClick={handleLoadMore}>
-                    더보기
-                  </Button>
-                ) : (
-                  <div className="mt-4" style={{ height: 0 }}></div>
-                )}
-              </>
-            )}
-          </>
-        }
-        />
+          <Route path='/detail/:id' element={<Detail info={info} />} />
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/watched' element={<Watched />} />
+          <Route path='/about' element={<About />}>
+            <Route path='member' element={<div>멤버임</div>} />
+            <Route path='location' element={<div>위치임</div>} />
+          </Route>
 
-        <Route path='/detail/:id' element={<Detail info={info} />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/watched' element={<Watched />} />
-        <Route path='/about' element={<About />}>
-          <Route path='member' element={<div>멤버임</div>} />
-          <Route path='location' element={<div>위치임</div>} />
-        </Route>
+          <Route path='/event' element={<EventPage />}>
+            <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>} />
+            <Route path='two' element={<p>생일기념 쿠폰받기</p>} />
 
-        <Route path='/event' element={<EventPage />}>
-          <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>} />
-          <Route path='two' element={<p>생일기념 쿠폰받기</p>} />
+          </Route>
 
-        </Route>
+          <Route path='*' element={<div>없는 페이지</div>} />
 
-        <Route path='*' element={<div>없는 페이지</div>} />
-
-      </Routes>
+        </Routes>
+      </Suspense>
     </div>
   );
 }
