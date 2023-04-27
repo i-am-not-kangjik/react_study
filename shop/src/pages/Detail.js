@@ -26,10 +26,20 @@ function Detail(props) {
     });
 
     let { id } = useParams();
-    let found_id = props.info.find((x) => x.id == id);
+    let found_id = props.info.find((x) => x.id == id) || {};
     let [alert, setAlert] = useState(true);
     let [tabNum, setTabNum] = useState(0);
     let dispatch = useDispatch();
+
+    useEffect(() => {
+        const watched = JSON.parse(localStorage.getItem('watched')) || []; // 기존에 저장된 watched 값을 가져옴
+        const exists = watched.some((item) => item.id === found_id.id); // 현재 상품이 이미 watched에 존재하는지 확인
+    
+        if (!exists) {
+          watched.push({ id: found_id.id }); // 새로운 상품을 watched에 추가
+          localStorage.setItem('watched', JSON.stringify(watched)); // watched 값을 localStorage에 저장
+        }
+      }, [found_id]);    
 
     return (
         <div className={`container mt-5 start ${fade2}`}>

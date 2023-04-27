@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { Button, Nav, Navbar, Container, Row, Spinner } from 'react-bootstrap';
 import data from './data.js';
@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { selectTotalCartCount } from './store/cartSlice';
 
 function App() {
+
   const totalCartCount = useSelector(selectTotalCartCount);
   let navigate = useNavigate();
   const [info, setInfo] = useState(data);
@@ -59,6 +60,24 @@ function App() {
       });
   };
 
+  const [watched, setWatched] = useState([]);
+
+  useEffect(() => {
+    const watchedData = JSON.parse(localStorage.getItem('watched')) || [];
+    const newWatched = [];
+    for (let i = 0; i < watchedData.length; i++) {
+      const id = watchedData[i].id;
+      const exists = info.some((item) => item.id === id);
+      if (exists) {
+        newWatched.push(watchedData[i]);
+      }
+    }
+    setWatched(newWatched);
+  }, [info, watched]);
+
+
+
+
 
 
   return (
@@ -67,15 +86,39 @@ function App() {
 
       <Navbar bg="dark" variant="dark">
         <Container fluid>
-        <Navbar.Brand className='ms-4' onClick={() => navigate('/')}>다판다</Navbar.Brand>
-          <Nav className="ms-auto">
-            {/* <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> */}
-            <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
+          <Navbar.Brand className='ms-4' onClick={() => navigate('/')}>다판다</Navbar.Brand>
+          <Nav className="ms-auto justify-content-between">
+            <Nav.Link onClick={() => { navigate('/watched') }}>
+              <div style={{ position: 'relative' }}>
+                {watched.length > 3 && (
+                  <div style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    +{watched.length - 3}
+                  </div>
+                )}
+                {watched.slice(0, 3).map((item) => (
+                  <img
+                    key={item.id}
+                    src={process.env.PUBLIC_URL + '/laptop' + item.id + '.jpg?' + Date.now()}
+                    alt={item.title}
+                    style={{ height: '30px', width: '30px', borderRadius: '50%', border: '2px solid white', marginLeft: '-10px' }}
+                  />
+                ))}
+                {(watched.length > 0 && watched.length <= 3) && (
+                  <div style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {watched.length}
+                  </div>
+                )}
+              </div>
+            </Nav.Link>
+
+
+            <Nav.Link className='ml-4' onClick={() => { navigate('/about') }}>About</Nav.Link>
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart ({totalCartCount})</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
+
 
       <Routes>
         <Route path='/' element={
