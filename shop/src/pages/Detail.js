@@ -64,7 +64,7 @@ function Detail(props) {
                             name: found_id.title,
                             count: 1
                         }));
-                    }} className="btn btn-danger btn-lg">주문하기</button>
+                    }} className="btn btn-primary btn-lg">장바구니에 추가</button>
                 </div>
             </div>
 

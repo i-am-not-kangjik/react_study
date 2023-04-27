@@ -11,6 +11,7 @@ import ItemCard from './components/ItemCard';
 import Cart from './pages/Cart';
 import { useSelector } from 'react-redux';
 import { selectTotalCartCount } from './store/cartSlice';
+import Watched from './pages/Watched';
 
 function App() {
 
@@ -154,7 +155,7 @@ function App() {
 
         <Route path='/detail/:id' element={<Detail info={info} />} />
         <Route path='/cart' element={<Cart />} />
-
+        <Route path='/watched' element={<Watched />} />
         <Route path='/about' element={<About />}>
           <Route path='member' element={<div>멤버임</div>} />
           <Route path='location' element={<div>위치임</div>} />
